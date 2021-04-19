@@ -1,3 +1,8 @@
+package course.java2;
+
+import course.java2.Calculator;
+import course.java2.MaximumElementArray;
+
 import java.util.Scanner;
 
 public class TaskOfChoice {
