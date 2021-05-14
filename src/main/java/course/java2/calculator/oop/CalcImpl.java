@@ -1,5 +1,6 @@
 package course.java2.calculator.oop;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CalcImpl implements Calc {
@@ -7,13 +8,21 @@ public class CalcImpl implements Calc {
     @Override
     public double calculate() {
         Scanner scanner = new Scanner(System.in);
-
+        double d;
         System.out.println("Enter the first number:");
-        double d = scanner.nextDouble();
+        try {
+            d = scanner.nextDouble();
+        } catch (InputMismatchException e) {
+            throw new InputMismatchException("Вы ввели первое значение, не являющееся числом");
+        }
 
+        double e;
         System.out.println("Enter the second number:");
-        double e = scanner.nextDouble();
-
+        try {
+            e = scanner.nextDouble();
+        } catch (InputMismatchException ex) {
+            throw new InputMismatchException("Вы ввели второе значение, не являющееся числом");
+        }
         System.out.println("Select operation (+,-,*,/): ");
 
         char c = scanner.next().charAt(0);
@@ -27,8 +36,7 @@ public class CalcImpl implements Calc {
             case '/':
                 return div(d, e);
             default:
-                System.out.println("Не удалось опознать выбранную операцию: " + c);
-                return 0;
+                throw new IncorrectOperationException("Не удалось опознать выбранную операцию: " + c);
         }
     }
 
@@ -45,6 +53,9 @@ public class CalcImpl implements Calc {
     }
 
     private double div(double a, double b) {
+        if (b == 0) {
+            throw new ArithmeticException("Ошибка: Вы ввели второе число равное нулю. Нельзя делить на ноль.");
+        }
         return a / b;
     }
 }
